@@ -34,7 +34,7 @@ public class TableFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        addMenu = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -143,8 +143,13 @@ public class TableFrame extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("tab3", jPanel3);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/master/data/add.png"))); // NOI18N
-        jMenuBar1.add(jMenu1);
+        addMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/master/data/add.png"))); // NOI18N
+        addMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMenuMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(addMenu);
 
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
@@ -164,6 +169,14 @@ public class TableFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMenuMouseClicked
+        System.out.println("Add menu!");
+        InputFrame iff = new InputFrame();
+        iff.setLocationRelativeTo(null);
+        iff.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        iff.setVisible(true);
+    }//GEN-LAST:event_addMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -201,8 +214,8 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu addMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
