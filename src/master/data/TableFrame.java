@@ -1,6 +1,8 @@
 
 package master.data;
 
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Utkarsh
@@ -30,6 +32,13 @@ public class TableFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        Tab3SemCombo = new javax.swing.JComboBox<>();
+        Tab3SubCombo = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -59,13 +68,13 @@ public class TableFrame extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(1).setMaxWidth(150);
         }
 
-        jLabel1.setText("Sr. No.                  Branch                          Exam  Form                    Appeared                          Pass                             ATKT                               Fail                             Passing %");
+        jLabel1.setText("Sr. No.                  Branch                              Exam  Form                        Appeared                             Pass                                   ATKT                                    Fail                              Passing %");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -82,7 +91,7 @@ public class TableFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane2.addTab("tab1", jPanel1);
+        jTabbedPane2.addTab("Sumary", jPanel1);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,7 +101,7 @@ public class TableFrame extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "<HTML>Sr.<BR/>No.</HTML>", "<HTML>Student<BR/>Name</HTML>", "<HTML>Sub 1<BR/>(TH)</HTML>", "<HTML>Sub 1<BR/>(PR)</HTML>", "<HTML>Sub 2<BR/>(TH)</HTML>", "<HTML>Sub 2<BR/>(PR)</HTML>", "<HTML>Sub 3<BR/>(TH)</HTML>", "<HTML>Sub 3<BR/>(PR)</HTML>", "<HTML>Sub 4<BR/>(TH)</HTML>", "<HTML>Sub 5<BR/>(TH)</HTML>", "<HTML>Total<BR/>Obtained</HTML>", "<HTML>Result<BR/>Pass/Fail</HTML>", "<HTML>Fees<BR/>Paid</HTML>", "<HTML>Fees<BR/>Balance</HTML>"
+                "<HTML>Sr.<BR/>No.</HTML>", "<HTML>Student<BR/>Name</HTML>", "<HTML>Sub 1<BR/>(TH)</HTML>", "<HTML>Sub 1<BR/>(PR)</HTML>", "<HTML>Sub 2<BR/>(TH)</HTML>", "<HTML>Sub 2<BR/>(PR)</HTML>", "<HTML>Sub 3<BR/>(TH)</HTML>", "<HTML>Sub 3<BR/>(PR)</HTML>", "<HTML>Sub 4<BR/>(TH)</HTML>", "<HTML>Sub 5<BR/>(TH)</HTML>", "<HTML>Total<BR/>Obtained</HTML>", "<HTML>Result<BR/>Pass/Fail</HTML>", "<HTML>Percent</HTML>", "<HTML>SGPA</HTML>"
             }
         ) {
             Class[] types = new Class [] {
@@ -129,7 +138,7 @@ public class TableFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +147,109 @@ public class TableFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane2.addTab("tab2", jPanel2);
+        jTabbedPane2.addTab("Semester wise", jPanel2);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Sr. No.", "Student Name", "Marks Obtained", "Total Marks", "Result"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMinWidth(100);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTable3.getColumnModel().getColumn(1).setMinWidth(300);
+            jTable3.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTable3.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTable3.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable3.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable3.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTable3.getColumnModel().getColumn(3).setMinWidth(200);
+            jTable3.getColumnModel().getColumn(3).setPreferredWidth(200);
+            jTable3.getColumnModel().getColumn(3).setMaxWidth(200);
+            jTable3.getColumnModel().getColumn(4).setMinWidth(200);
+            jTable3.getColumnModel().getColumn(4).setPreferredWidth(200);
+            jTable3.getColumnModel().getColumn(4).setMaxWidth(200);
+        }
+
+        Tab3SemCombo.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab3SemCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Semester", "Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8" }));
+        Tab3SemCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Tab3SemComboItemStateChanged(evt);
+            }
+        });
+        Tab3SemCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tab3SemComboActionPerformed(evt);
+            }
+        });
+
+        Tab3SubCombo.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab3SubCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Subject" }));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        jLabel2.setText("Subject Name");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        jLabel3.setText("Subject Faculty Name");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addComponent(Tab3SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(Tab3SubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addContainerGap(161, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Tab3SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tab3SubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
+        );
+
+        jTabbedPane2.addTab("Subject wise", jPanel3);
 
         addMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/master/data/add.png"))); // NOI18N
         addMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,6 +285,60 @@ public class TableFrame extends javax.swing.JFrame {
         iff.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         iff.setVisible(true);
     }//GEN-LAST:event_addMenuMouseClicked
+
+    private void Tab3SemComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab3SemComboItemStateChanged
+        int sel = Tab3SemCombo.getSelectedIndex();
+        String sem1[][] = {{"s1s1", "s1s2", "s1s3", "s1s4", "s1s5"},
+                            {"s2s1", "s2s2", "s2s3", "s2s4", "s2s5"},
+                            {"s3s1", "s3s2", "s3s3", "s3s4", "s3s5"},
+                            {"s4s1", "s4s2", "s4s3", "s4s4", "s4s5"},
+                            {"s5s1", "s5s2", "s5s3", "s5s4", "s5s5"},
+                            {"s6s1", "s6s2", "s6s3", "s6s4", "s6s5"},
+                            {"s7s1", "s7s2", "s7s3", "s7s4", "s7s5"},
+                            {"s8s1", "s8s2", "s8s3", "s8s4", "s8s5"}};
+        DefaultComboBoxModel model;
+        switch(sel){
+            case 1: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 2: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 3: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 4: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 5: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 6: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 7: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            case 8: Tab3SubCombo.removeAllItems();
+                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    Tab3SubCombo.setModel( model );
+                    break;
+            default: Tab3SubCombo.removeAllItems();
+                     Tab3SubCombo.addItem("Select subject");
+                     break;
+        }
+    }//GEN-LAST:event_Tab3SemComboItemStateChanged
+
+    private void Tab3SemComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab3SemComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tab3SemComboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,17 +376,24 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Tab3SemCombo;
+    private javax.swing.JComboBox<String> Tab3SubCombo;
     private javax.swing.JMenu addMenu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }
