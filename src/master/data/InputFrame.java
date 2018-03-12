@@ -5,16 +5,27 @@
  */
 package master.data;
 
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
- * @author Spongebob
+ * @author Utkarsh
  */
 public class InputFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InputFrame
-     */
+    private ArrayList<Holder> h1 = new ArrayList<Holder>();
+    private ArrayList<HolderTeacher> h3 = new ArrayList<HolderTeacher>();
+    private HolderTeacher ht = new HolderTeacher();
+    private Holder h2 = new Holder();
+    private DatabaseOperations dbo;
+    private Boolean examForm = true;
+    
     public InputFrame() {
+        dbo = new DatabaseOperations();
         initComponents();
     }
 
@@ -34,15 +45,14 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tfName = new javax.swing.JTextField();
+        cbSem = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbBranch = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioYes = new javax.swing.JRadioButton();
+        radioNo = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -52,17 +62,20 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        saveStudentInfoBtn = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
-        jFormattedTextField7 = new javax.swing.JFormattedTextField();
-        jFormattedTextField8 = new javax.swing.JFormattedTextField();
-        jFormattedTextField9 = new javax.swing.JFormattedTextField();
+        tfS1 = new javax.swing.JFormattedTextField();
+        tfS2 = new javax.swing.JFormattedTextField();
+        tfS4 = new javax.swing.JFormattedTextField();
+        tfP1 = new javax.swing.JFormattedTextField();
+        tfP3 = new javax.swing.JFormattedTextField();
+        tfS3 = new javax.swing.JFormattedTextField();
+        tfS5 = new javax.swing.JFormattedTextField();
+        tfP2 = new javax.swing.JFormattedTextField();
+        tfAtkt = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        tfSgpa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -73,28 +86,29 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        s1Name = new javax.swing.JTextField();
+        s2Name = new javax.swing.JTextField();
+        s3Name = new javax.swing.JTextField();
+        s4Name = new javax.swing.JTextField();
+        s5Name = new javax.swing.JTextField();
+        p2Name = new javax.swing.JTextField();
+        p1Name = new javax.swing.JTextField();
+        p3Name = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JSeparator();
+        f2Name = new javax.swing.JTextField();
+        f3Name = new javax.swing.JTextField();
+        f4Name = new javax.swing.JTextField();
+        f1Name = new javax.swing.JTextField();
+        f5Name = new javax.swing.JTextField();
+        saveSubjectInfoBtn = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        cbTeacherSem1 = new javax.swing.JComboBox<>();
+        jLabel34 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -114,38 +128,43 @@ public class InputFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Semester:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 113, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 63, 194, -1));
+        jPanel1.add(tfName, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 63, 194, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbSem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8" }));
+        cbSem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbSemActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 108, 194, -1));
+        jPanel1.add(cbSem, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 108, 194, -1));
 
         jLabel5.setText("Branch :");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 67, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electrical and Telecommunication Engineering" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 62, 246, -1));
+        cbBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electrical and Telecommunication Engineering" }));
+        jPanel1.add(cbBranch, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 62, 246, -1));
 
         jLabel6.setText("Exam Form filled:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 158, -1, -1));
 
-        jRadioButton1.setText("Yes");
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 152, -1, -1));
+        radioYes.setText("Yes");
+        radioYes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioYesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(radioYes, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 152, -1, -1));
 
-        jRadioButton2.setText("No");
-        jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 152, 55, -1));
+        radioNo.setText("No");
+        radioNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioNoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(radioNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 152, 55, -1));
 
-        jLabel7.setText("Fees Paid :");
+        jLabel7.setText("ATKT (Y/N):");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 113, -1, -1));
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField1.setMinimumSize(new java.awt.Dimension(14, 20));
-        jFormattedTextField1.setPreferredSize(new java.awt.Dimension(14, 20));
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 108, 246, 26));
 
         jLabel8.setText("Marks Details:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 204, -1, -1));
@@ -174,55 +193,65 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel16.setText("Practical 3:");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 368, -1, -1));
 
-        jButton1.setText("Save");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(525, 408, 125, -1));
+        saveStudentInfoBtn.setText("Save");
+        saveStudentInfoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveStudentInfoBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(saveStudentInfoBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(525, 408, 125, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 26, 570, 10));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 210, 566, 10));
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField2.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField2.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 238, 206, -1));
+        tfS1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfS1.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfS1.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfS1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 238, 206, -1));
 
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField3.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField3.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 238, 246, -1));
+        tfS2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfS2.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfS2.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfS2, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 238, 246, -1));
 
-        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField4.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField4.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 280, 246, -1));
+        tfS4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfS4.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfS4.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfS4, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 280, 246, -1));
 
-        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField5.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField5.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 322, 246, -1));
+        tfP1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfP1.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfP1.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 322, 246, -1));
 
-        jFormattedTextField6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField6.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField6.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 364, 246, -1));
+        tfP3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfP3.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfP3.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfP3, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 364, 246, -1));
 
-        jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField7.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField7.setPreferredSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField7.addActionListener(new java.awt.event.ActionListener() {
+        tfS3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfS3.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfS3.setPreferredSize(new java.awt.Dimension(4, 24));
+        tfS3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField7ActionPerformed(evt);
+                tfS3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jFormattedTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 206, -1));
+        jPanel1.add(tfS3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 206, -1));
 
-        jFormattedTextField8.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField8.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField8.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 322, 206, -1));
+        tfS5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfS5.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfS5.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfS5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 322, 206, -1));
 
-        jFormattedTextField9.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField9.setMinimumSize(new java.awt.Dimension(4, 24));
-        jFormattedTextField9.setPreferredSize(new java.awt.Dimension(4, 24));
-        jPanel1.add(jFormattedTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 364, 206, -1));
+        tfP2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfP2.setMinimumSize(new java.awt.Dimension(4, 24));
+        tfP2.setPreferredSize(new java.awt.Dimension(4, 24));
+        jPanel1.add(tfP2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 364, 206, -1));
+        jPanel1.add(tfAtkt, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 240, -1));
+
+        jLabel32.setText("SGPA:");
+        jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 60, -1));
+        jPanel1.add(tfSgpa, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 240, -1));
 
         jTabbedPane1.addTab("Students Info", jPanel1);
 
@@ -255,7 +284,21 @@ public class InputFrame extends javax.swing.JFrame {
 
         jLabel31.setText("Faculty 4 Name:");
 
-        jButton2.setText("Save Details");
+        saveSubjectInfoBtn.setText("Save Details");
+        saveSubjectInfoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveSubjectInfoBtnActionPerformed(evt);
+            }
+        });
+
+        cbTeacherSem1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8" }));
+        cbTeacherSem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTeacherSem1ActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setText("Select Sem:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,35 +315,35 @@ public class InputFrame extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(s2Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(s3Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(s4Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(s5Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(s1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(p1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(p2Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel25)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(p3Name, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
@@ -311,20 +354,21 @@ public class InputFrame extends javax.swing.JFrame {
                                             .addComponent(jLabel26)
                                             .addComponent(jLabel27)
                                             .addComponent(jLabel31)
-                                            .addComponent(jLabel29))
+                                            .addComponent(jLabel29)
+                                            .addComponent(jLabel34))
                                         .addGap(26, 26, 26)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextField14, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(jTextField10)
-                                            .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                            .addComponent(cbTeacherSem1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(f5Name, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                            .addComponent(f4Name, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                            .addComponent(f3Name, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                            .addComponent(f2Name)
+                                            .addComponent(f1Name, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                            .addComponent(saveSubjectInfoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jSeparator4, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                    .addComponent(jSeparator3)
                                     .addComponent(jSeparator5))
                                 .addGap(81, 81, 81)))))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -337,56 +381,56 @@ public class InputFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(s1Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(f1Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(s2Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(f2Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(s3Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(f3Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(s4Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(f4Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(s5Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(f5Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(p1Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTeacherSem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel24)
+                        .addComponent(p2Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
-                        .addComponent(jButton2))
+                        .addComponent(saveSubjectInfoBtn))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel25)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(p3Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -406,13 +450,112 @@ public class InputFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbSemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbSemActionPerformed
 
-    private void jFormattedTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField7ActionPerformed
+    private void tfS3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfS3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField7ActionPerformed
+    }//GEN-LAST:event_tfS3ActionPerformed
+
+    private void saveStudentInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveStudentInfoBtnActionPerformed
+        if(!tfName.getText().isEmpty() && !tfAtkt.getText().isEmpty() && !tfS1.getText().isEmpty() && 
+                !tfS2.getText().isEmpty() && !tfS3.getText().isEmpty() && !tfS4.getText().isEmpty() &&
+                !tfS5.getText().isEmpty() && !tfP1.getText().isEmpty() && !tfP2.getText().isEmpty() &&
+                !tfP3.getText().isEmpty() && !tfS3.getText().isEmpty()){
+            int outOf = 1;
+            int total = Integer.parseInt(tfS1.getText()) + Integer.parseInt(tfS2.getText()) + Integer.parseInt(tfS3.getText()) +
+                        Integer.parseInt(tfS4.getText()) + Integer.parseInt(tfS5.getText()) + Integer.parseInt(tfP1.getText()) +
+                        Integer.parseInt(tfP2.getText()) + Integer.parseInt(tfP3.getText());
+            
+            if(Integer.parseInt(tfS5.getText())==0)
+                outOf = 100 + 100 + 100 + 100 + 50 + 50 + 50;
+            else
+                outOf = 100 + 100 + 100 + 100 + 100 + 50 + 50 + 50;
+            
+            double percent = ((double)total/(double)outOf) * 100.0;
+            
+            DecimalFormat f = new DecimalFormat("##.00");
+            percent = Double.valueOf(f.format(percent));
+            
+            h2.setName(tfName.getText());
+            h2.setBranch(cbBranch.getSelectedItem().toString());
+            h2.setS1(Integer.parseInt(tfS1.getText()));
+            h2.setS2(Integer.parseInt(tfS2.getText()));
+            h2.setS3(Integer.parseInt(tfS3.getText()));
+            h2.setS4(Integer.parseInt(tfS4.getText()));
+            h2.setS5(Integer.parseInt(tfS5.getText()));
+            h2.setP1(Integer.parseInt(tfP1.getText()));
+            h2.setP2(Integer.parseInt(tfP2.getText()));
+            h2.setP3(Integer.parseInt(tfP3.getText()));
+            h2.setAtkt(tfAtkt.getText());
+            h2.setSgpa(Double.valueOf(tfSgpa.getText()));
+            h2.setSem(cbSem.getSelectedIndex()+1);
+            h2.setTotal(total);
+            h2.setPercent(percent);
+            
+            try {
+                dbo.addStudentRow(h2);
+            } catch (SQLException ex) {
+                Logger.getLogger(InputFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }else{
+            System.out.println("Enter all details!");
+        }
+    }//GEN-LAST:event_saveStudentInfoBtnActionPerformed
+
+    private void radioYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioYesActionPerformed
+        if(radioYes.isSelected()){
+            examForm = true;
+            radioNo.setSelected(false);
+        }
+    }//GEN-LAST:event_radioYesActionPerformed
+
+    private void radioNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNoActionPerformed
+        if(radioNo.isSelected()){
+            examForm = false;
+            radioYes.setSelected(false);
+        }
+    }//GEN-LAST:event_radioNoActionPerformed
+
+    private void saveSubjectInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSubjectInfoBtnActionPerformed
+        if(!s1Name.getText().isEmpty() && !s2Name.getText().isEmpty() && !s3Name.getText().isEmpty() && 
+                !s4Name.getText().isEmpty() && !f1Name.getText().isEmpty() && !f2Name.getText().isEmpty() &&
+                !f3Name.getText().isEmpty() && !f4Name.getText().isEmpty() && !p1Name.getText().isEmpty() &&
+                !p1Name.getText().isEmpty() && !p1Name.getText().isEmpty()){
+            
+            
+            ht.setF1(f1Name.getText());
+            ht.setF2(f2Name.getText());
+            ht.setF3(f3Name.getText());
+            ht.setF4(f4Name.getText());
+            ht.setF5(f5Name.getText());
+            
+            ht.setS1(s1Name.getText());
+            ht.setS2(s2Name.getText());
+            ht.setS3(s3Name.getText());
+            ht.setS4(s4Name.getText());
+            ht.setS5(s5Name.getText());
+            
+            ht.setP1(p1Name.getText());
+            ht.setP2(p2Name.getText());
+            ht.setP3(p3Name.getText());
+            ht.setSem(cbTeacherSem1.getSelectedIndex()+1);
+            try {
+                dbo.addTeacherRow(ht);
+            } catch (SQLException ex) {
+                Logger.getLogger(InputFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }else{
+            System.out.println("Enter all details!");
+        }
+    }//GEN-LAST:event_saveSubjectInfoBtnActionPerformed
+
+    private void cbTeacherSem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTeacherSem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTeacherSem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,19 +593,14 @@ public class InputFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
-    private javax.swing.JFormattedTextField jFormattedTextField7;
-    private javax.swing.JFormattedTextField jFormattedTextField8;
-    private javax.swing.JFormattedTextField jFormattedTextField9;
+    private javax.swing.JComboBox<String> cbBranch;
+    private javax.swing.JComboBox<String> cbSem;
+    private javax.swing.JComboBox<String> cbTeacherSem1;
+    private javax.swing.JTextField f1Name;
+    private javax.swing.JTextField f2Name;
+    private javax.swing.JTextField f3Name;
+    private javax.swing.JTextField f4Name;
+    private javax.swing.JTextField f5Name;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -488,6 +626,8 @@ public class InputFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -496,27 +636,33 @@ public class InputFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField p1Name;
+    private javax.swing.JTextField p2Name;
+    private javax.swing.JTextField p3Name;
+    private javax.swing.JRadioButton radioNo;
+    private javax.swing.JRadioButton radioYes;
+    private javax.swing.JTextField s1Name;
+    private javax.swing.JTextField s2Name;
+    private javax.swing.JTextField s3Name;
+    private javax.swing.JTextField s4Name;
+    private javax.swing.JTextField s5Name;
+    private javax.swing.JButton saveStudentInfoBtn;
+    private javax.swing.JButton saveSubjectInfoBtn;
+    private javax.swing.JTextField tfAtkt;
+    private javax.swing.JTextField tfName;
+    private javax.swing.JFormattedTextField tfP1;
+    private javax.swing.JFormattedTextField tfP2;
+    private javax.swing.JFormattedTextField tfP3;
+    private javax.swing.JFormattedTextField tfS1;
+    private javax.swing.JFormattedTextField tfS2;
+    private javax.swing.JFormattedTextField tfS3;
+    private javax.swing.JFormattedTextField tfS4;
+    private javax.swing.JFormattedTextField tfS5;
+    private javax.swing.JTextField tfSgpa;
     // End of variables declaration//GEN-END:variables
 }
