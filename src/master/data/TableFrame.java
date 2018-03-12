@@ -1,6 +1,7 @@
 
 package master.data;
 
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -8,9 +9,12 @@ import javax.swing.DefaultComboBoxModel;
  * @author Utkarsh
  */
 public class TableFrame extends javax.swing.JFrame {
-
+    
+    private DatabaseOperations dbo;
+    private ArrayList<Holder> hs = new ArrayList<Holder>();
+    
     public TableFrame() {
-        DatabaseOperations dbo = new DatabaseOperations();
+        dbo = new DatabaseOperations();
         initComponents();
         
     }
@@ -341,6 +345,15 @@ public class TableFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Tab3SemComboActionPerformed
 
+    private void setTable3(){
+        String sem = Tab3SemCombo.getSelectedItem().toString();
+        String sub = Tab3SubCombo.getSelectedItem().toString();
+        String query = "Select * from Student"+
+                       "Where sem = "+sem+" AND sub= "+sub+" ;";
+        hs = dbo.directQuery(query);
+        //jTable3.
+    }
+    
     /**
      * @param args the command line arguments
      */

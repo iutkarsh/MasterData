@@ -153,5 +153,24 @@ public class DatabaseOperations {
         ps.execute();
         ps = null;
     }
+    
+    public ArrayList<Holder> directQuery(String str){
+        ArrayList<Holder> ht = new ArrayList<Holder>();
+        
+        try {
+            ps = conn.prepareStatement(str);
+            res = ps.executeQuery();
+            res.beforeFirst();
+            while(res.next()){
+                ht.add(new Holder(res.getInt("No"), res.getInt("Sem"), res.getString("branch"),res.getInt("s1"), res.getInt("s2"), res.getInt("s3"), res.getInt("s4"),
+                                         res.getInt("s5"), res.getInt("p1"), res.getInt("p2"),res.getInt("p3"), res.getInt("total"),
+                                         res.getString("name"), res.getString("result"), res.getString("aktk"), res.getInt("percent"),
+                                         res.getInt("Sgpa")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ht;
+    }
 }
 
