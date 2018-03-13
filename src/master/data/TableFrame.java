@@ -3,6 +3,7 @@ package master.data;
 
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +13,11 @@ public class TableFrame extends javax.swing.JFrame {
     
     private DatabaseOperations dbo;
     private ArrayList<Holder> hs = new ArrayList<Holder>();
-    
+    private ArrayList<HolderTeacher> ht = new ArrayList<HolderTeacher>();
     public TableFrame() {
         dbo = new DatabaseOperations();
         initComponents();
-        
+        clearTables();
     }
 
     /**
@@ -32,11 +33,12 @@ public class TableFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        Tab2SemCombo1 = new javax.swing.JComboBox<>();
+        Tab2SemCombo2 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -46,7 +48,6 @@ public class TableFrame extends javax.swing.JFrame {
         Tab3FacName = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Results Analysis");
@@ -54,13 +55,10 @@ public class TableFrame extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "", "", "Reg", "Ex", "Reg", "Ex", "Reg", "Ex", "Reg", "Ex", "Reg", "Ex", "Reg", "Ex"
+                "Sr. No.", "Branch", "Exam Form", "Pass", "ATKT", "Fail", "Passin %"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -68,21 +66,16 @@ public class TableFrame extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setMinWidth(45);
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(45);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(45);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(150);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(150);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(300);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(300);
         }
-
-        jLabel1.setText("Sr. No.                  Branch                              Exam  Form                        Appeared                             Pass                                   ATKT                                    Fail                              Passing %");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,9 +83,7 @@ public class TableFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 90, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -100,10 +91,7 @@ public class TableFrame extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "<HTML>Sr.<BR/>No.</HTML>", "<HTML>Student<BR/>Name</HTML>", "<HTML>Sub 1<BR/>(TH)</HTML>", "<HTML>Sub 1<BR/>(PR)</HTML>", "<HTML>Sub 2<BR/>(TH)</HTML>", "<HTML>Sub 2<BR/>(PR)</HTML>", "<HTML>Sub 3<BR/>(TH)</HTML>", "<HTML>Sub 3<BR/>(PR)</HTML>", "<HTML>Sub 4<BR/>(TH)</HTML>", "<HTML>Sub 5<BR/>(TH)</HTML>", "<HTML>Total<BR/>Obtained</HTML>", "<HTML>Result<BR/>Pass/Fail</HTML>", "<HTML>Percent</HTML>", "<HTML>SGPA</HTML>"
@@ -139,27 +127,61 @@ public class TableFrame extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(13).setResizable(false);
         }
 
+        Tab2SemCombo1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab2SemCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Branch" }));
+        Tab2SemCombo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Tab2SemCombo1ItemStateChanged(evt);
+            }
+        });
+
+        Tab2SemCombo2.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab2SemCombo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Semester", "Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8" }));
+        Tab2SemCombo2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Tab2SemCombo2ItemStateChanged(evt);
+            }
+        });
+        Tab2SemCombo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tab2SemCombo2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(339, 339, 339))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(29, 29, 29)
+                    .addComponent(Tab2SemCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(694, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 133, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(Tab2SemCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(488, Short.MAX_VALUE)))
         );
 
         jTabbedPane2.addTab("Semester wise", jPanel2);
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Sr. No.", "Student Name", "Marks Obtained", "Total Marks", "Result"
@@ -214,6 +236,16 @@ public class TableFrame extends javax.swing.JFrame {
 
         Tab3SubCombo.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         Tab3SubCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Subject" }));
+        Tab3SubCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Tab3SubComboItemStateChanged(evt);
+            }
+        });
+        Tab3SubCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tab3SubComboActionPerformed(evt);
+            }
+        });
 
         Tab3SubName.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         Tab3SubName.setText("Subject Name");
@@ -264,9 +296,6 @@ public class TableFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(addMenu);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,7 +306,7 @@ public class TableFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
 
         pack();
@@ -345,18 +374,166 @@ public class TableFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Tab3SemComboActionPerformed
 
-    private void setTable3(){
-        String sem = Tab3SemCombo.getSelectedItem().toString();
-        String sub = Tab3SubCombo.getSelectedItem().toString();
-        String query = "Select * from Student"+
-                       "Where sem = "+sem+" AND sub= "+sub+" ;";
-        hs = dbo.directQuery(query);
-        //jTable3.
+    private void Tab2SemCombo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemCombo1ItemStateChanged
+        clearTables();
+        setTable2();
+    }//GEN-LAST:event_Tab2SemCombo1ItemStateChanged
+
+    private void Tab2SemCombo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemCombo2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tab2SemCombo2ItemStateChanged
+
+    private void Tab3SubComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab3SubComboActionPerformed
+        //setTable3();
+    }//GEN-LAST:event_Tab3SubComboActionPerformed
+
+    private void Tab3SubComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab3SubComboItemStateChanged
+        clearTables();
+        setTable3();
+    }//GEN-LAST:event_Tab3SubComboItemStateChanged
+
+    private void Tab2SemCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab2SemCombo2ActionPerformed
+        clearTables();
+        setTable2();
+    }//GEN-LAST:event_Tab2SemCombo2ActionPerformed
+
+    public void clearTables(){
+        DefaultTableModel table1 = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel table3 = (DefaultTableModel) jTable3.getModel();
+        table1.setRowCount(0);
+        table2.setRowCount(0);
+        table3.setRowCount(0);
+        setTables();
     }
     
+    public void setTables(){
+        String query = "Select Count(*) from Student "+
+                       "Where Atkt = 'y' OR Atkt = 'y';";
+        int atkt = dbo.directQuery(query);
+        System.out.println("Atkt:"+atkt);
+        
+        query = "Select Count(*) from Student "+
+                "Where Result = 'pass' OR Atkt = 'Pass';";
+        int pass = dbo.directQuery(query);
+        System.out.println("Pass: " + pass);
+        
+        query = "Select Count(*) from Student "+
+                "Where Result = 'fail' OR Atkt = 'Fail';";
+        int fail = dbo.directQuery(query);
+        System.out.println("Fail: " + fail);
+        
+        int total = pass + fail + atkt;
+        
+        float percent = ((float)(pass + atkt)/(float)total) * 100.0f;
+        
+        System.out.println("Percent: " + percent);
+        DefaultTableModel tablemod = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<1; i++){
+                tablemod.addRow(new Object[]{i+1, "xxxx", 'y', pass, atkt, fail, 98.23});
+        }
+    }
+    
+    public void setTable2(){
+        int sem = Tab2SemCombo2.getSelectedIndex();
+        int sub = Tab2SemCombo1.getSelectedIndex()+1;
+        
+        String query = "Select * from Student "+
+                       "Where sem = '"+sem+"';";
+        hs = dbo.directQueryStudent(query);
+        
+        DefaultTableModel tablemod = (DefaultTableModel) jTable2.getModel();
+        jTable2.setRowSelectionAllowed(true);
+        jTable2.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<hs.size(); i++){
+                tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS1(), hs.get(i).getP1(), 
+                                                  hs.get(i).getS2(), hs.get(i).getP2(),
+                                                  hs.get(i).getS3(), hs.get(i).getP3(), 
+                                                  hs.get(i).getS4(), hs.get(i).getS5(), 
+                                                  hs.get(i).getTotal(), hs.get(i).getResult(), hs.get(i).getPercent(),
+                                                  hs.get(i).getSgpa()});
+        }
+    }
+    
+    public void setTable3(){
+        int sem = Tab3SemCombo.getSelectedIndex();
+        int sub = Tab3SubCombo.getSelectedIndex()+1;
+        String query = "Select * from Student "+
+                       "Where sem = '"+sem+"';";
+        hs = dbo.directQueryStudent(query);
+        
+        DefaultTableModel tablemod = (DefaultTableModel) jTable3.getModel();
+        jTable3.setRowSelectionAllowed(true);
+        jTable3.setColumnSelectionAllowed(false);
+        
+        query = "Select * from teacher "+
+                "Where sem = '"+sem+"';";
+        ht = dbo.directQueryTeacher(query);
+        int flag=0;
+        //System.out.println(ht.get(0).getS1() + " " + ht.get(0).getF1());
+        for(int i=0; i<hs.size(); i++){
+            if(sub==1){
+                if(hs.get(i).getS1()>=40)
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS1(), 100, "Pass"});
+                else
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS1(), 100, "Fail"});
+                if(flag==0 && ht.size()!=0){
+                    Tab3SubName.setText("Subject: " + ht.get(0).getS1());
+                    Tab3FacName.setText("Faculty: " + ht.get(0).getF1());
+                    flag=1;
+                }
+            }else if(sub==2){
+                if(hs.get(i).getS2()>=40)
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS2(), 100, "Pass"});
+                else
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS2(), 100, "Fail"});
+                if(flag==0 && ht.size()!=0){
+                    Tab3SubName.setText("Subject: " + ht.get(0).getS2());
+                    Tab3FacName.setText("Faculty: " + ht.get(0).getF2());
+                    flag=1;
+                }
+            }else if(sub==3){
+                if(hs.get(i).getS3()>=40)
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS3(), 100, "Pass"});
+                else
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS3(), 100, "Fail"});
+                if(flag==0 && ht.size()!=0){
+                    Tab3SubName.setText("Subject: " + ht.get(0).getS3());
+                    Tab3FacName.setText("Faculty: " + ht.get(0).getF3());
+                    flag=1;
+                }
+            }else if(sub==4){
+                if(hs.get(i).getS4()>=40)
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS4(), 100, "Pass"});
+                else
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS4(), 100, "Fail"});
+                if(flag==0 && ht.size()!=0){
+                    Tab3SubName.setText("Subject: " + ht.get(0).getS4());
+                    Tab3FacName.setText("Faculty: " + ht.get(0).getF4());
+                    flag=1;
+                }
+            }else if(sub==5){
+                if(hs.get(i).getS5()>=40)
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS5(), 100, "Pass"});
+                else
+                    tablemod.addRow(new Object[]{i+1, hs.get(i).getName(), hs.get(i).getS5(), 100, "Fail"});
+                if(flag==0 && ht.size()!=0){
+                    Tab3SubName.setText("Subject: " + ht.get(0).getS5());
+                    Tab3FacName.setText("Faculty: " + ht.get(0).getF5());
+                    flag=1;
+                }
+            }    
+        }
+    }
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -390,13 +567,13 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Tab2SemCombo1;
+    private javax.swing.JComboBox<String> Tab2SemCombo2;
     private javax.swing.JLabel Tab3FacName;
     private javax.swing.JComboBox<String> Tab3SemCombo;
     private javax.swing.JComboBox<String> Tab3SubCombo;
     private javax.swing.JLabel Tab3SubName;
     private javax.swing.JMenu addMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

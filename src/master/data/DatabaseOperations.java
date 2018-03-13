@@ -154,7 +154,7 @@ public class DatabaseOperations {
         ps = null;
     }
     
-    public ArrayList<Holder> directQuery(String str){
+    public ArrayList<Holder> directQueryStudent(String str){
         ArrayList<Holder> ht = new ArrayList<Holder>();
         
         try {
@@ -164,13 +164,45 @@ public class DatabaseOperations {
             while(res.next()){
                 ht.add(new Holder(res.getInt("No"), res.getInt("Sem"), res.getString("branch"),res.getInt("s1"), res.getInt("s2"), res.getInt("s3"), res.getInt("s4"),
                                          res.getInt("s5"), res.getInt("p1"), res.getInt("p2"),res.getInt("p3"), res.getInt("total"),
-                                         res.getString("name"), res.getString("result"), res.getString("aktk"), res.getInt("percent"),
+                                         res.getString("name"), res.getString("result"), res.getString("atkt"), res.getInt("percent"),
                                          res.getInt("Sgpa")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseOperations.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ht;
+    }
+    
+    public ArrayList<HolderTeacher> directQueryTeacher(String str){
+        ArrayList<HolderTeacher> ht = new ArrayList<HolderTeacher>();
+        
+        try {
+            ps = conn.prepareStatement(str);
+            res = ps.executeQuery();
+            res.beforeFirst();
+            while(res.next()){
+                ht.add(new HolderTeacher(res.getInt("Sem"), res.getString("Sub1"), res.getString("Sub2"), res.getString("Sub3"), res.getString("Sub4"),
+                                         res.getString("Sub5"), res.getString("Prac1"), res.getString("Prac2"), res.getString("Prac3"),
+                                         res.getString("Fac1"), res.getString("Fac2"), res.getString("Fac3"), res.getString("Fac4"), res.getString("Fac5")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ht;
+    }
+    
+    public int directQuery(String str){
+        int count=0;
+        try {
+            ps = conn.prepareStatement(str);
+            res = ps.executeQuery();
+            res.beforeFirst();
+            while(res.next())
+                count = res.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
     }
 }
 

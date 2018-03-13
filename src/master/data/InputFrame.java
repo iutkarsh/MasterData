@@ -477,7 +477,16 @@ public class InputFrame extends javax.swing.JFrame {
             
             DecimalFormat f = new DecimalFormat("##.00");
             percent = Double.valueOf(f.format(percent));
-            
+            String result;
+            if( Integer.parseInt(tfS1.getText())<40 || Integer.parseInt(tfS2.getText())<40 || 
+                Integer.parseInt(tfS3.getText())<40 || Integer.parseInt(tfS4.getText())<40 ||
+                Integer.parseInt(tfS5.getText())<40){
+                result = "Fail";
+                tfAtkt.setText("N");
+            }else{
+                result = "Pass";
+                tfAtkt.setText("Y");
+            }
             h2.setName(tfName.getText());
             h2.setBranch(cbBranch.getSelectedItem().toString());
             h2.setS1(Integer.parseInt(tfS1.getText()));
@@ -491,6 +500,7 @@ public class InputFrame extends javax.swing.JFrame {
             h2.setAtkt(tfAtkt.getText());
             h2.setSgpa(Double.valueOf(tfSgpa.getText()));
             h2.setSem(cbSem.getSelectedIndex()+1);
+            h2.setResult(result);
             h2.setTotal(total);
             h2.setPercent(percent);
             
