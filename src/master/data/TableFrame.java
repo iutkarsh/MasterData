@@ -18,6 +18,7 @@ public class TableFrame extends javax.swing.JFrame {
         dbo = new DatabaseOperations();
         initComponents();
         clearTables();
+        
     }
 
     /**
@@ -38,7 +39,7 @@ public class TableFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         Tab2SemCombo1 = new javax.swing.JComboBox<>();
-        Tab2SemCombo2 = new javax.swing.JComboBox<>();
+        Tab2SemCombo = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -128,23 +129,23 @@ public class TableFrame extends javax.swing.JFrame {
         }
 
         Tab2SemCombo1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        Tab2SemCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Branch" }));
+        Tab2SemCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Branch", "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electronics and Telecommunication Engineering" }));
         Tab2SemCombo1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 Tab2SemCombo1ItemStateChanged(evt);
             }
         });
 
-        Tab2SemCombo2.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        Tab2SemCombo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Semester", "Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8" }));
-        Tab2SemCombo2.addItemListener(new java.awt.event.ItemListener() {
+        Tab2SemCombo.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab2SemCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Semester", "Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8" }));
+        Tab2SemCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                Tab2SemCombo2ItemStateChanged(evt);
+                Tab2SemComboItemStateChanged(evt);
             }
         });
-        Tab2SemCombo2.addActionListener(new java.awt.event.ActionListener() {
+        Tab2SemCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Tab2SemCombo2ActionPerformed(evt);
+                Tab2SemComboActionPerformed(evt);
             }
         });
 
@@ -160,7 +161,7 @@ public class TableFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(29, 29, 29)
-                    .addComponent(Tab2SemCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tab2SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(694, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
@@ -173,7 +174,7 @@ public class TableFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(31, 31, 31)
-                    .addComponent(Tab2SemCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tab2SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(488, Short.MAX_VALUE)))
         );
 
@@ -321,52 +322,66 @@ public class TableFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addMenuMouseClicked
 
     private void Tab3SemComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab3SemComboItemStateChanged
-        int sel = Tab3SemCombo.getSelectedIndex();
-        String sem1[][] = {{"s1s1", "s1s2", "s1s3", "s1s4", "s1s5"},
+        int sem = Tab3SemCombo.getSelectedIndex();
+        
+        String query = "Select * from teacher "+
+                "Where sem = '"+sem+"';";
+        ht = dbo.directQueryTeacher(query);
+        
+        /*String sem1[][] = {{"s1s1", "s1s2", "s1s3", "s1s4", "s1s5"},
                             {"s2s1", "s2s2", "s2s3", "s2s4", "s2s5"},
                             {"s3s1", "s3s2", "s3s3", "s3s4", "s3s5"},
                             {"s4s1", "s4s2", "s4s3", "s4s4", "s4s5"},
                             {"s5s1", "s5s2", "s5s3", "s5s4", "s5s5"},
                             {"s6s1", "s6s2", "s6s3", "s6s4", "s6s5"},
                             {"s7s1", "s7s2", "s7s3", "s7s4", "s7s5"},
-                            {"s8s1", "s8s2", "s8s3", "s8s4", "s8s5"}};
+                            {"s8s1", "s8s2", "s8s3", "s8s4", "s8s5"}};*/
+
+        
+            
         DefaultComboBoxModel model;
-        switch(sel){
+        if(ht.size()>0){
+            String sem1[] = {ht.get(0).getS1(), ht.get(0).getS2(), ht.get(0).getS3(), ht.get(0).getS4(), ht.get(0).getS5()};
+        switch(sem){
             case 1: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 2: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 3: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 4: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 5: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 6: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 7: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             case 8: Tab3SubCombo.removeAllItems();
-                    model = new DefaultComboBoxModel( sem1[sel-1] );
+                    model = new DefaultComboBoxModel( sem1);
                     Tab3SubCombo.setModel( model );
                     break;
             default: Tab3SubCombo.removeAllItems();
                      Tab3SubCombo.addItem("Select subject");
                      break;
+            }
+        }else{
+            Tab3SubCombo.removeAllItems();
+            Tab3SubCombo.addItem("Select subject");
         }
     }//GEN-LAST:event_Tab3SemComboItemStateChanged
 
@@ -379,9 +394,9 @@ public class TableFrame extends javax.swing.JFrame {
         setTable2();
     }//GEN-LAST:event_Tab2SemCombo1ItemStateChanged
 
-    private void Tab2SemCombo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemCombo2ItemStateChanged
+    private void Tab2SemComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemComboItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_Tab2SemCombo2ItemStateChanged
+    }//GEN-LAST:event_Tab2SemComboItemStateChanged
 
     private void Tab3SubComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab3SubComboActionPerformed
         //setTable3();
@@ -392,10 +407,28 @@ public class TableFrame extends javax.swing.JFrame {
         setTable3();
     }//GEN-LAST:event_Tab3SubComboItemStateChanged
 
-    private void Tab2SemCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab2SemCombo2ActionPerformed
+    private void Tab2SemComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab2SemComboActionPerformed
         clearTables();
         setTable2();
-    }//GEN-LAST:event_Tab2SemCombo2ActionPerformed
+        /*ArrayList<Holder> temphold = new ArrayList<Holder>();
+        int sem = Tab3SemCombo.getSelectedIndex();
+        
+        String query = "Select * from student "+
+                       "Group by branch;";
+        temphold = dbo.directQueryStudent(query);
+        
+        String branch[] = null;
+
+        for(int i=0 ; i<temphold.size(); i++){
+            branch[i] = temphold.get(i).getBranch();
+        }
+            
+        DefaultComboBoxModel model;
+        Tab2SemCombo1.removeAllItems();
+        model = new DefaultComboBoxModel( branch);
+        Tab2SemCombo1.setModel( model );*/
+        
+    }//GEN-LAST:event_Tab2SemComboActionPerformed
 
     public void clearTables(){
         DefaultTableModel table1 = (DefaultTableModel) jTable1.getModel();
@@ -433,12 +466,12 @@ public class TableFrame extends javax.swing.JFrame {
         jTable1.setColumnSelectionAllowed(false);
         
         for(int i=0; i<1; i++){
-                tablemod.addRow(new Object[]{i+1, "xxxx", 'y', pass, atkt, fail, 98.23});
+                tablemod.addRow(new Object[]{i+1,"XXXXXX", 'y', pass, atkt, fail, percent});
         }
     }
     
     public void setTable2(){
-        int sem = Tab2SemCombo2.getSelectedIndex();
+        int sem = Tab2SemCombo.getSelectedIndex();
         int sub = Tab2SemCombo1.getSelectedIndex()+1;
         
         String query = "Select * from Student "+
@@ -567,8 +600,8 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Tab2SemCombo;
     private javax.swing.JComboBox<String> Tab2SemCombo1;
-    private javax.swing.JComboBox<String> Tab2SemCombo2;
     private javax.swing.JLabel Tab3FacName;
     private javax.swing.JComboBox<String> Tab3SemCombo;
     private javax.swing.JComboBox<String> Tab3SubCombo;

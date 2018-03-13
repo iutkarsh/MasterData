@@ -141,7 +141,7 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel5.setText("Branch :");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 67, -1, -1));
 
-        cbBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electrical and Telecommunication Engineering" }));
+        cbBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electronics and Telecommunication Engineering" }));
         jPanel1.add(cbBranch, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 62, 246, -1));
 
         jLabel6.setText("Exam Form filled:");
@@ -488,7 +488,15 @@ public class InputFrame extends javax.swing.JFrame {
                 tfAtkt.setText("Y");
             }
             h2.setName(tfName.getText());
-            h2.setBranch(cbBranch.getSelectedItem().toString());
+            
+            if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Computer Science Engineering"))
+                h2.setBranch("CSE");
+            else if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Mechanical Engineering"))
+                h2.setBranch("MECH");
+            else if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Civil Engineering"))
+                h2.setBranch("CIVIL");
+            else if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Electronics and Telecommunication Engineering"))
+                h2.setBranch("ETC");
             h2.setS1(Integer.parseInt(tfS1.getText()));
             h2.setS2(Integer.parseInt(tfS2.getText()));
             h2.setS3(Integer.parseInt(tfS3.getText()));
