@@ -104,7 +104,7 @@ public class DatabaseOperations {
     public void addStudentRow(Holder h1) throws SQLException{
         String student = "INSERT INTO student"+
                          "(Name, Sem, Branch, s1, s2, s3, s4, s5, p1, p2, p3, total, percent, atkt, sgpa, result, examForm)"+
-                         "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+                         "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
       
         ps = conn.prepareStatement(student);
 
