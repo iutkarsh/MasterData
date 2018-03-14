@@ -478,6 +478,7 @@ public class InputFrame extends javax.swing.JFrame {
             DecimalFormat f = new DecimalFormat("##.00");
             percent = Double.valueOf(f.format(percent));
             String result;
+            
             if( Integer.parseInt(tfS1.getText())<40 || Integer.parseInt(tfS2.getText())<40 || 
                 Integer.parseInt(tfS3.getText())<40 || Integer.parseInt(tfS4.getText())<40 ||
                 Integer.parseInt(tfS5.getText())<40){
@@ -487,7 +488,12 @@ public class InputFrame extends javax.swing.JFrame {
                 result = "Pass";
                 tfAtkt.setText("Y");
             }
+            
             h2.setName(tfName.getText());
+            if(examForm)
+                h2.setExamForm("Y");
+            else
+                h2.setExamForm("N");
             
             if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Computer Science Engineering"))
                 h2.setBranch("CSE");
@@ -497,6 +503,7 @@ public class InputFrame extends javax.swing.JFrame {
                 h2.setBranch("CIVIL");
             else if(cbBranch.getSelectedItem().toString().equalsIgnoreCase("Electronics and Telecommunication Engineering"))
                 h2.setBranch("ETC");
+            
             h2.setS1(Integer.parseInt(tfS1.getText()));
             h2.setS2(Integer.parseInt(tfS2.getText()));
             h2.setS3(Integer.parseInt(tfS3.getText()));

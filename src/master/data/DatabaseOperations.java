@@ -51,6 +51,7 @@ public class DatabaseOperations {
                                "Name VARCHAR(50) NOT NULL,"+
                                "Sem  INT NOT NULL,"+
                                "Branch VARCHAR(50),"+
+                               "ExamForm CHAR(1),"+
                                "s1 INT,"+
                                "s2 INT,"+
                                "s3 INT,"+
@@ -102,7 +103,7 @@ public class DatabaseOperations {
     
     public void addStudentRow(Holder h1) throws SQLException{
         String student = "INSERT INTO student"+
-                         "(Name, Sem, Branch, s1, s2, s3, s4, s5, p1, p2, p3, total, percent, atkt, sgpa, result)"+
+                         "(Name, Sem, Branch, s1, s2, s3, s4, s5, p1, p2, p3, total, percent, atkt, sgpa, result, examForm)"+
                          "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
       
         ps = conn.prepareStatement(student);
@@ -123,6 +124,7 @@ public class DatabaseOperations {
         ps.setString(14, h1.getAtkt());
         ps.setDouble(15, h1.getSgpa());
         ps.setString(16, h1.getResult());
+        ps.setString(17, h1.getExamForm());
         
         ps.execute();
         ps = null;
@@ -165,7 +167,7 @@ public class DatabaseOperations {
                 ht.add(new Holder(res.getInt("No"), res.getInt("Sem"), res.getString("branch"),res.getInt("s1"), res.getInt("s2"), res.getInt("s3"), res.getInt("s4"),
                                          res.getInt("s5"), res.getInt("p1"), res.getInt("p2"),res.getInt("p3"), res.getInt("total"),
                                          res.getString("name"), res.getString("result"), res.getString("atkt"), res.getInt("percent"),
-                                         res.getInt("Sgpa")));
+                                         res.getInt("Sgpa"), res.getString("ExamForm")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseOperations.class.getName()).log(Level.SEVERE, null, ex);

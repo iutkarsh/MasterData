@@ -13,6 +13,7 @@ public class TableFrame extends javax.swing.JFrame {
     
     private DatabaseOperations dbo;
     private ArrayList<Holder> hs = new ArrayList<Holder>();
+    private ArrayList<Holder> filterHs = new ArrayList<Holder>();
     private ArrayList<HolderTeacher> ht = new ArrayList<HolderTeacher>();
     public TableFrame() {
         dbo = new DatabaseOperations();
@@ -40,6 +41,8 @@ public class TableFrame extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         Tab2SemCombo1 = new javax.swing.JComboBox<>();
         Tab2SemCombo = new javax.swing.JComboBox<>();
+        tab2ResultFilter = new javax.swing.JComboBox<>();
+        tab2AtktFilter = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -47,6 +50,7 @@ public class TableFrame extends javax.swing.JFrame {
         Tab3SubCombo = new javax.swing.JComboBox<>();
         Tab3SubName = new javax.swing.JLabel();
         Tab3FacName = new javax.swing.JLabel();
+        tab3ResultFilter = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
 
@@ -82,10 +86,10 @@ public class TableFrame extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 90, Short.MAX_VALUE)
+                .addGap(0, 49, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane2.addTab("Sumary", jPanel1);
@@ -149,6 +153,20 @@ public class TableFrame extends javax.swing.JFrame {
             }
         });
 
+        tab2ResultFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Result", "Pass", "Fail" }));
+        tab2ResultFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab2ResultFilterActionPerformed(evt);
+            }
+        });
+
+        tab2AtktFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ATKT", "Yes", "No" }));
+        tab2AtktFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab2AtktFilterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -158,6 +176,12 @@ public class TableFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(339, 339, 339))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(tab2ResultFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(tab2AtktFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(29, 29, 29)
@@ -169,7 +193,11 @@ public class TableFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab2ResultFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tab2AtktFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -254,6 +282,13 @@ public class TableFrame extends javax.swing.JFrame {
         Tab3FacName.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         Tab3FacName.setText("Subject Faculty Name");
 
+        tab3ResultFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Result", "Pass", "Fail" }));
+        tab3ResultFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab3ResultFilterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -262,13 +297,17 @@ public class TableFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Tab3FacName)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(Tab3SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(155, 155, 155)
+                                .addComponent(Tab3SemCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Tab3SubName))
                         .addGap(107, 107, 107)
-                        .addComponent(Tab3SubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Tab3SubName)
-                    .addComponent(Tab3FacName))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Tab3SubCombo, 0, 294, Short.MAX_VALUE)
+                            .addComponent(tab3ResultFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(161, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -278,11 +317,16 @@ public class TableFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Tab3SemCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tab3SubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Tab3SubName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Tab3SubName))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(tab3ResultFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Tab3FacName)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
@@ -430,6 +474,166 @@ public class TableFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_Tab2SemComboActionPerformed
 
+    private void tab2ResultFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab2ResultFilterActionPerformed
+        String result = null;
+        if(tab2ResultFilter.getSelectedIndex()==0)
+            result = null;
+        else if(tab2ResultFilter.getSelectedIndex()==1)
+            result = "Pass";
+        else
+            result = "Fail";
+        System.out.println("Result: "+result);
+        
+        for(int i=0; i<hs.size(); i++){
+            if(hs.get(i).getResult()!=null && hs.get(i).getResult().equalsIgnoreCase(result))
+                filterHs.add(hs.get(i));
+        }
+        
+        clearTables();
+        
+        DefaultTableModel tablemod = (DefaultTableModel) jTable2.getModel();
+        jTable2.setRowSelectionAllowed(true);
+        jTable2.setColumnSelectionAllowed(false);
+        if(result==null){
+            setTable3();
+        }else{
+            for(int i=0; i<filterHs.size(); i++){
+                tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS1(), filterHs.get(i).getP1(), 
+                                                  filterHs.get(i).getS2(), filterHs.get(i).getP2(),
+                                                  filterHs.get(i).getS3(), filterHs.get(i).getP3(), 
+                                                  filterHs.get(i).getS4(), filterHs.get(i).getS5(), 
+                                                  filterHs.get(i).getTotal(), filterHs.get(i).getResult(), filterHs.get(i).getPercent(),
+                                                  filterHs.get(i).getSgpa()});
+            }
+        }
+        
+        filterHs.clear();
+    }//GEN-LAST:event_tab2ResultFilterActionPerformed
+
+    private void tab2AtktFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab2AtktFilterActionPerformed
+        String atkt = null;
+        if(tab2AtktFilter.getSelectedIndex()==0)
+            atkt = null;
+        else if(tab2AtktFilter.getSelectedIndex()==1)
+            atkt = "Y";
+        else
+            atkt = "N";
+        System.out.println("Atkt: "+atkt);
+        
+        for(int i=0; i<hs.size(); i++){
+            if(hs.get(i).getAtkt()!=null && hs.get(i).getAtkt().equalsIgnoreCase(atkt))
+                filterHs.add(hs.get(i));
+        }
+        
+        clearTables();
+        
+        DefaultTableModel tablemod = (DefaultTableModel) jTable2.getModel();
+        jTable2.setRowSelectionAllowed(true);
+        jTable2.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<filterHs.size(); i++){
+                tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS1(), filterHs.get(i).getP1(), 
+                                                  filterHs.get(i).getS2(), filterHs.get(i).getP2(),
+                                                  filterHs.get(i).getS3(), filterHs.get(i).getP3(), 
+                                                  filterHs.get(i).getS4(), filterHs.get(i).getS5(), 
+                                                  filterHs.get(i).getTotal(), filterHs.get(i).getResult(), filterHs.get(i).getPercent(),
+                                                  filterHs.get(i).getSgpa()});
+        }
+        filterHs.clear();
+    }//GEN-LAST:event_tab2AtktFilterActionPerformed
+
+    
+    private void tab3ResultFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab3ResultFilterActionPerformed
+        String result = null;
+        int sub = Tab3SubCombo.getSelectedIndex()+1;
+        
+        if(tab3ResultFilter.getSelectedIndex()==0)
+            result = null;
+        else if(tab3ResultFilter.getSelectedIndex()==1)
+            result = "Pass";
+        else
+            result = "Fail";
+        System.out.println("Result: "+result);
+        
+        clearTables();
+        
+        DefaultTableModel tablemod = (DefaultTableModel) jTable3.getModel();
+        jTable3.setRowSelectionAllowed(true);
+        jTable3.setColumnSelectionAllowed(false);
+        
+        if(result==null){
+            setTable3();
+        }else if(result.equalsIgnoreCase("Pass")){
+            System.out.println("IF part"+sub);
+            for(int i=0; i<hs.size(); i++){
+                if(sub==1){
+                    if(hs.get(i).getS1()>=40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==2){
+                    if(hs.get(i).getS2()>=40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==3){
+                    if(hs.get(i).getS3()>=40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==4){
+                    if(hs.get(i).getS4()>=40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==5){
+                    if(hs.get(i).getS5()>=40)
+                        filterHs.add(hs.get(i));
+                }    
+            }
+            System.out.println("IF part");
+            for(int i=0; i<filterHs.size(); i++){
+                if(sub==1){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS1(), 100, "Pass"});
+                }else if(sub==2){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS2(), 100, "Pass"});
+                }else if(sub==3){
+                    
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS3(), 100, "Pass"});
+                }else if(sub==4){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS4(), 100, "Pass"});
+                }else if(sub==5){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS5(), 100, "Pass"});
+                }    
+            }       
+        }else if(result.equalsIgnoreCase("Fail")){
+            for(int i=0; i<hs.size(); i++){
+                if(sub==1){
+                    if(hs.get(i).getS1()<40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==2){
+                    if(hs.get(i).getS2()<40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==3){
+                    if(hs.get(i).getS3()<40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==4){
+                    if(hs.get(i).getS4()<40)
+                        filterHs.add(hs.get(i));
+                }else if(sub==5){
+                    if(hs.get(i).getS5()<40)
+                        filterHs.add(hs.get(i));
+                }    
+            }
+            for(int i=0; i<filterHs.size(); i++){
+                if(sub==1){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS1(), 100, "Fail"});
+                }else if(sub==2){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS2(), 100, "Fail"});
+                }else if(sub==3){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS3(), 100, "Fail"});
+                }else if(sub==4){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS4(), 100, "Fail"});
+                }else if(sub==5){
+                    tablemod.addRow(new Object[]{i+1, filterHs.get(i).getName(), filterHs.get(i).getS5(), 100, "Fail"});
+                }    
+            }
+        }
+        filterHs.clear();
+    }//GEN-LAST:event_tab3ResultFilterActionPerformed
+
     public void clearTables(){
         DefaultTableModel table1 = (DefaultTableModel) jTable1.getModel();
         DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
@@ -442,19 +646,24 @@ public class TableFrame extends javax.swing.JFrame {
     
     public void setTables(){
         String query = "Select Count(*) from Student "+
-                       "Where Atkt = 'y' OR Atkt = 'y';";
+                       "Where Branch = 'CSE' AND Atkt = 'y';";
         int atkt = dbo.directQuery(query);
         System.out.println("Atkt:"+atkt);
         
         query = "Select Count(*) from Student "+
-                "Where Result = 'pass' OR Atkt = 'Pass';";
+                "Where Branch = 'CSE' AND Result = 'pass';";
         int pass = dbo.directQuery(query);
         System.out.println("Pass: " + pass);
         
         query = "Select Count(*) from Student "+
-                "Where Result = 'fail' OR Atkt = 'Fail';";
+                "Where Branch = 'CSE' AND Result = 'fail';";
         int fail = dbo.directQuery(query);
         System.out.println("Fail: " + fail);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'CSE' AND examForm = 'Y';";
+        int examForm = dbo.directQuery(query);
+        System.out.println("Exam Form: " + examForm);
         
         int total = pass + fail + atkt;
         
@@ -466,7 +675,112 @@ public class TableFrame extends javax.swing.JFrame {
         jTable1.setColumnSelectionAllowed(false);
         
         for(int i=0; i<1; i++){
-                tablemod.addRow(new Object[]{i+1,"XXXXXX", 'y', pass, atkt, fail, percent});
+                tablemod.addRow(new Object[]{1,"CSE", examForm, pass, atkt, fail, percent});
+        }
+        atkt = pass = fail = examForm =0;
+        
+        
+        query = "Select Count(*) from Student "+
+                       "Where Branch = 'MECH' AND Atkt = 'y';";
+        atkt = dbo.directQuery(query);
+        System.out.println("Atkt:"+atkt);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'MECH' AND Result = 'pass';";
+        pass = dbo.directQuery(query);
+        System.out.println("Pass: " + pass);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'MECH' AND Result = 'fail';";
+        fail = dbo.directQuery(query);
+        System.out.println("Fail: " + fail);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'MECH' AND examForm = 'Y';";
+        examForm = dbo.directQuery(query);
+        System.out.println("Exam Form: " + examForm);
+        
+        total = pass + fail + atkt;
+        
+        percent = ((float)(pass + atkt)/(float)total) * 100.0f;
+        
+        System.out.println("Percent: " + percent);
+        tablemod = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<1; i++){
+                tablemod.addRow(new Object[]{2,"MECH", examForm, pass, atkt, fail, percent});
+        }
+        atkt = pass = fail = examForm =0;
+        
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'Civil' AND Atkt = 'y';";
+        atkt = dbo.directQuery(query);
+        System.out.println("Atkt:"+atkt);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'Civil' AND Result = 'pass';";
+        pass = dbo.directQuery(query);
+        System.out.println("Pass: " + pass);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'Civil' AND Result = 'fail';";
+        fail = dbo.directQuery(query);
+        System.out.println("Fail: " + fail);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'Civil' AND examForm = 'Y';";
+        examForm = dbo.directQuery(query);
+        System.out.println("Exam Form: " + examForm);
+        
+        total = pass + fail + atkt;
+        
+        percent = ((float)(pass + atkt)/(float)total) * 100.0f;
+        
+        System.out.println("Percent: " + percent);
+        tablemod = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<1; i++){
+                tablemod.addRow(new Object[]{3,"CIVIL", examForm, pass, atkt, fail, percent});
+        }
+        atkt = pass = fail = examForm =0;
+        
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'ETC' AND Atkt = 'y';";
+        atkt = dbo.directQuery(query);
+        System.out.println("Atkt:"+atkt);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'ETC' AND Result = 'pass';";
+        pass = dbo.directQuery(query);
+        System.out.println("Pass: " + pass);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'ETC' AND Result = 'fail';";
+        fail = dbo.directQuery(query);
+        System.out.println("Fail: " + fail);
+        
+        query = "Select Count(*) from Student "+
+                "Where Branch = 'ETC' AND examForm = 'Y';";
+        examForm = dbo.directQuery(query);
+        System.out.println("Exam Form: " + examForm);
+        
+        total = pass + fail + atkt;
+        
+        percent = ((float)(pass + atkt)/(float)total) * 100.0f;
+        
+        System.out.println("Percent: " + percent);
+        tablemod = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setColumnSelectionAllowed(false);
+        
+        for(int i=0; i<1; i++){
+                tablemod.addRow(new Object[]{4,"ETC", examForm, pass, atkt, fail, percent});
         }
     }
     
@@ -477,7 +791,7 @@ public class TableFrame extends javax.swing.JFrame {
         String query = "Select * from Student "+
                        "Where sem = '"+sem+"';";
         hs = dbo.directQueryStudent(query);
-        
+
         DefaultTableModel tablemod = (DefaultTableModel) jTable2.getModel();
         jTable2.setRowSelectionAllowed(true);
         jTable2.setColumnSelectionAllowed(false);
@@ -619,5 +933,8 @@ public class TableFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JComboBox<String> tab2AtktFilter;
+    private javax.swing.JComboBox<String> tab2ResultFilter;
+    private javax.swing.JComboBox<String> tab3ResultFilter;
     // End of variables declaration//GEN-END:variables
 }

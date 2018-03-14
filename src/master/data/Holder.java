@@ -2,13 +2,13 @@ package master.data;
 
 public class Holder {
     private int no, sem, s1, s2, s3, s4, s5, p1, p2, p3, total;
-    private String name, result, atkt, branch;
+    private String name, result, atkt, branch, examForm;
     private double percent, sgpa;
 
     
     public Holder(){}
     
-    public Holder(int no, int sem, String branch, int s1, int s2, int s3, int s4, int s5, int p1, int p2, int p3, int total, String name, String result, String atkt, double percent, double sgpa) {
+    public Holder(int no, int sem, String branch, int s1, int s2, int s3, int s4, int s5, int p1, int p2, int p3, int total, String name, String result, String atkt, double percent, double sgpa, String examForm) {
         this.setNo(no);
         this.setSem(sem);
         this.setBranch(branch);
@@ -26,10 +26,19 @@ public class Holder {
         this.setAtkt(atkt);
         this.setPercent(percent);
         this.setSgpa(sgpa);
+        this.setExamForm(examForm);
     }
 
     
 //<editor-fold defaultstate="collapsed" desc="Getter and setter">
+    
+    public String getExamForm() {
+        return examForm;
+    }
+
+    public void setExamForm(String examForm) {
+        this.examForm = examForm;
+    }
     
     public String getBranch() {
         return branch;
