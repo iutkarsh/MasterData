@@ -39,7 +39,7 @@ public class TableFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        Tab2SemCombo1 = new javax.swing.JComboBox<>();
+        Tab2BranchCombo = new javax.swing.JComboBox<>();
         Tab2SemCombo = new javax.swing.JComboBox<>();
         tab2ResultFilter = new javax.swing.JComboBox<>();
         tab2AtktFilter = new javax.swing.JComboBox<>();
@@ -132,11 +132,11 @@ public class TableFrame extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(13).setResizable(false);
         }
 
-        Tab2SemCombo1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        Tab2SemCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Branch", "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electronics and Telecommunication Engineering" }));
-        Tab2SemCombo1.addItemListener(new java.awt.event.ItemListener() {
+        Tab2BranchCombo.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Tab2BranchCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Branch", "Computer Science Engineering", "Mechanical Engineering", "Civil Engineering", "Electronics and Telecommunication Engineering" }));
+        Tab2BranchCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                Tab2SemCombo1ItemStateChanged(evt);
+                Tab2BranchComboItemStateChanged(evt);
             }
         });
 
@@ -174,7 +174,7 @@ public class TableFrame extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Tab2BranchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(339, 339, 339))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
@@ -192,7 +192,7 @@ public class TableFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(Tab2SemCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Tab2BranchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tab2ResultFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -433,10 +433,10 @@ public class TableFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Tab3SemComboActionPerformed
 
-    private void Tab2SemCombo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemCombo1ItemStateChanged
+    private void Tab2BranchComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2BranchComboItemStateChanged
         clearTables();
         setTable2();
-    }//GEN-LAST:event_Tab2SemCombo1ItemStateChanged
+    }//GEN-LAST:event_Tab2BranchComboItemStateChanged
 
     private void Tab2SemComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Tab2SemComboItemStateChanged
         // TODO add your handling code here:
@@ -786,12 +786,37 @@ public class TableFrame extends javax.swing.JFrame {
     
     public void setTable2(){
         int sem = Tab2SemCombo.getSelectedIndex();
-        int sub = Tab2SemCombo1.getSelectedIndex()+1;
-        
-        String query = "Select * from Student "+
-                       "Where sem = '"+sem+"';";
-        hs = dbo.directQueryStudent(query);
-
+        int sub = Tab2BranchCombo.getSelectedIndex()+1;
+        String branch = null;
+                
+        switch (sub) {
+            case 1:
+                branch = null;
+                break;
+            case 2:
+                branch = "CSE";
+                break;
+            case 3:
+                branch = "MECH";
+                break;
+            case 4:
+                branch = "Civil";
+                break;
+            case 5:
+                branch = "ETC";
+                break;
+            default:
+                break;
+        }
+        String query;
+        if(branch!=null){
+            query = "Select * from Student "+
+                    "Where sem = '"+sem+"' AND branch = '"+branch+"';";
+            hs = dbo.directQueryStudent(query);
+        }else{
+            query = null;
+            hs.clear();
+        }
         DefaultTableModel tablemod = (DefaultTableModel) jTable2.getModel();
         jTable2.setRowSelectionAllowed(true);
         jTable2.setColumnSelectionAllowed(false);
@@ -914,8 +939,8 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Tab2BranchCombo;
     private javax.swing.JComboBox<String> Tab2SemCombo;
-    private javax.swing.JComboBox<String> Tab2SemCombo1;
     private javax.swing.JLabel Tab3FacName;
     private javax.swing.JComboBox<String> Tab3SemCombo;
     private javax.swing.JComboBox<String> Tab3SubCombo;
